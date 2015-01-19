@@ -24,7 +24,10 @@ define ['moment'], (moment) ->
 	                    return moment(date).format(opts.format)
 	                return date.format(opts.format)
 	
-	            [f(viewVal.startDate), f(viewVal.endDate)].join(opts.separator)
+                if opts.singleDatePicker
+                    f(viewVal.startDate)
+                else
+                    [f(viewVal.startDate), f(viewVal.endDate)].join(opts.separator)
 	
 	        _validateMin = (min, start) ->
 	            min = moment(min)
