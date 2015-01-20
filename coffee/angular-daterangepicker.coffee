@@ -109,35 +109,4 @@ picker.directive('dateRangePicker', ($compile, $timeout, $parse, dateRangePicker
                         )
                     ))
         )
-
-        if attrs.min
-            $scope.$watch('dateMin', (date) ->
-                if date
-                    if not modelCtrl.$isEmpty(modelCtrl.$modelValue)
-                        _validateMin(date, modelCtrl.$modelValue.startDate)
-
-                    opts['minDate'] = moment(date)
-                else
-                    opts['minDate'] = false
-                _init()
-            )
-
-        if attrs.max
-            $scope.$watch('dateMax', (date) ->
-                if date
-                    if not modelCtrl.$isEmpty(modelCtrl.$modelValue)
-                        _validateMax(date, modelCtrl.$modelValue.endDate)
-
-                    opts['maxDate'] = moment(date)
-                else
-                    opts['maxDate'] = false
-
-                _init()
-            )
-
-        if attrs.options
-            $scope.$watch('opts', (newOpts) ->
-                opts = angular.extend(opts, newOpts)
-                _init()
-            )
 )

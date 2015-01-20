@@ -102,7 +102,7 @@
           return el.data('daterangepicker');
         };
         _init();
-        el.change(function() {
+        return el.change(function() {
           if ($.trim(el.val()) === '') {
             return $timeout(function() {
               return $scope.$apply(function() {
@@ -114,38 +114,6 @@
             });
           }
         });
-        if (attrs.min) {
-          $scope.$watch('dateMin', function(date) {
-            if (date) {
-              if (!modelCtrl.$isEmpty(modelCtrl.$modelValue)) {
-                _validateMin(date, modelCtrl.$modelValue.startDate);
-              }
-              opts['minDate'] = moment(date);
-            } else {
-              opts['minDate'] = false;
-            }
-            return _init();
-          });
-        }
-        if (attrs.max) {
-          $scope.$watch('dateMax', function(date) {
-            if (date) {
-              if (!modelCtrl.$isEmpty(modelCtrl.$modelValue)) {
-                _validateMax(date, modelCtrl.$modelValue.endDate);
-              }
-              opts['maxDate'] = moment(date);
-            } else {
-              opts['maxDate'] = false;
-            }
-            return _init();
-          });
-        }
-        if (attrs.options) {
-          return $scope.$watch('opts', function(newOpts) {
-            opts = angular.extend(opts, newOpts);
-            return _init();
-          });
-        }
       }
     };
   }]);
