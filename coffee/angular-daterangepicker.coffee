@@ -16,7 +16,7 @@ define ['moment'], (moment) ->
 	    link: ($scope, element, attrs, modelCtrl) ->
 	        el = $(element)
 	        customOpts = $parse(attrs.dateRangePicker)($scope, {})
-	        opts = angular.extend(dateRangePickerConfig, customOpts)
+	        opts = angular.extend(dateRangePickerConfig, customOpts, $scope.opts)
 	
 	        _formatted = (viewVal) ->
 	            f = (date) ->

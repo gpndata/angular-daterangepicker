@@ -19,7 +19,7 @@
           var customOpts, el, opts, _formatted, _getPicker, _init, _validateMax, _validateMin;
           el = $(element);
           customOpts = $parse(attrs.dateRangePicker)($scope, {});
-          opts = angular.extend(dateRangePickerConfig, customOpts);
+          opts = angular.extend(dateRangePickerConfig, customOpts, $scope.opts);
           _formatted = function(viewVal) {
             var f;
             f = function(date) {
