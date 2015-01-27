@@ -28,7 +28,11 @@
               }
               return date.format(opts.format);
             };
-            return [f(viewVal.startDate), f(viewVal.endDate)].join(opts.separator);
+            if (opts.singleDatePicker) {
+              return f(viewVal.startDate);
+            } else {
+              return [f(viewVal.startDate), f(viewVal.endDate)].join(opts.separator);
+            }
           };
           _validateMin = function(min, start) {
             var valid;
@@ -49,8 +53,8 @@
           modelCtrl.$formatters.push(function(val) {
             if (val && val.startDate && val.endDate) {
               picker = _getPicker();
-              picker.setStartDate(val.startDate);
-              picker.setEndDate(val.endDate);
+              picker.setStartDate(moment.utc(val.startDate));
+              picker.setEndDate(moment.utc(val.endDate));
               return val;
             }
             return '';

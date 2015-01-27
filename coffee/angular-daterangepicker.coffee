@@ -24,7 +24,10 @@ define ['moment'], (moment) ->
 	                    return moment(date).format(opts.format)
 	                return date.format(opts.format)
 	
-	            [f(viewVal.startDate), f(viewVal.endDate)].join(opts.separator)
+                if opts.singleDatePicker
+                    f(viewVal.startDate)
+                else
+                    [f(viewVal.startDate), f(viewVal.endDate)].join(opts.separator)
 	
 	        _validateMin = (min, start) ->
 	            min = moment(min)
@@ -44,8 +47,8 @@ define ['moment'], (moment) ->
 	            if val and val.startDate and val.endDate
 	                # Update datepicker dates according to val before rendering.
 	                picker = _getPicker()
-	                picker.setStartDate(val.startDate)
-	                picker.setEndDate(val.endDate)
+	                picker.setStartDate(moment.utc(val.startDate))
+	                picker.setEndDate(moment.utc(val.endDate))
 	                return val
 	            return ''
 	        )
