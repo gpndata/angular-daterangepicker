@@ -13,11 +13,15 @@ define ['moment'], (moment) ->
 	        dateMin: '=min'
 	        dateMax: '=max'
 	        opts: '=options'
+	        chosenLabel: '=chosenLabel'
 	    link: ($scope, element, attrs, modelCtrl) ->
 	        el = $(element)
 	        customOpts = $parse(attrs.dateRangePicker)($scope, {})
+	        parentEl = customOpts.parentEl || ''
+	        parentEl = $(parentEl).css('display', 'none')
 	        opts = angular.extend(dateRangePickerConfig, customOpts, $scope.opts)
-	
+
+
 	        _formatted = (viewVal) ->
 	            f = (date) ->
 	                if not moment.isMoment(date)
@@ -49,6 +53,8 @@ define ['moment'], (moment) ->
 	                picker = _getPicker()
 	                picker.setStartDate(val.startDate)
 	                picker.setEndDate(val.endDate)
+	                $scope.chosenLabel = picker.chosenLabel
+	                parentEl.css('display', 'block')
 	                return val
 	            return ''
 	        )
@@ -88,6 +94,7 @@ define ['moment'], (moment) ->
 	
 	        _init = ->
 	            el.daterangepicker(opts, (start, end, label) ->
+	               	$scope.chosenLabel = this.chosenLabel
 	                $timeout(->
 	                  $scope.$apply(->
 	                      modelCtrl.$setViewValue({
