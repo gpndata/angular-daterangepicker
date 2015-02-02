@@ -47,8 +47,8 @@ define ['moment'], (moment) ->
 	            if val and val.startDate and val.endDate
 	                # Update datepicker dates according to val before rendering.
 	                picker = _getPicker()
-	                picker.setStartDate(moment.utc(val.startDate))
-	                picker.setEndDate(moment.utc(val.endDate))
+	                picker.setStartDate(val.startDate)
+	                picker.setEndDate(val.endDate)
 	                return val
 	            return ''
 	        )
