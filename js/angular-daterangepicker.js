@@ -13,12 +13,15 @@
         scope: {
           dateMin: '=min',
           dateMax: '=max',
-          opts: '=options'
+          opts: '=options',
+          chosenLabel: '=chosenLabel'
         },
         link: function($scope, element, attrs, modelCtrl) {
-          var customOpts, el, opts, _formatted, _getPicker, _init, _validateMax, _validateMin;
+          var customOpts, el, opts, parentEl, _formatted, _getPicker, _init, _validateMax, _validateMin;
           el = $(element);
           customOpts = $parse(attrs.dateRangePicker)($scope, {});
+          parentEl = customOpts.parentEl || '';
+          parentEl = $(parentEl).css('display', 'none');
           opts = angular.extend(dateRangePickerConfig, customOpts, $scope.opts);
           _formatted = function(viewVal) {
             var f;
@@ -53,8 +56,10 @@
           modelCtrl.$formatters.push(function(val) {
             if (val && val.startDate && val.endDate) {
               picker = _getPicker();
-              picker.setStartDate(moment.utc(val.startDate));
-              picker.setEndDate(moment.utc(val.endDate));
+              picker.setStartDate(val.startDate);
+              picker.setEndDate(val.endDate);
+              $scope.chosenLabel = picker.chosenLabel;
+              parentEl.css('display', 'block');
               return val;
             }
             return '';
@@ -89,6 +94,7 @@
           };
           _init = function() {
             return el.daterangepicker(opts, function(start, end, label) {
+              $scope.chosenLabel = this.chosenLabel;
               return $timeout(function() {
                 return $scope.$apply(function() {
                   modelCtrl.$setViewValue({
